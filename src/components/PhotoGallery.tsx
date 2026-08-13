@@ -13,26 +13,50 @@ interface GraduationPhoto {
 const graduationPhotos: GraduationPhoto[] = [
   {
     id: 1,
-    src: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=900&auto=format&fit=crop',
-    caption: 'Selamat untuk gelar barumu, Siti Kamilah, S.Psi.! 🎓🤍',
-    tag: 'Graduation Day',
-  },
-  {
-    id: 2,
-    src: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=900&auto=format&fit=crop',
-    caption: 'Senyum paling indah di hari kelulusan penuh kebanggaan 🌸',
+    src: '/Kamila/WhatsApp Image 2026-08-13 at 23.41.41.jpeg',
+    caption: 'Cantik dan penuh senyuman indah 🌸✨',
     tag: 'Happy Moments',
   },
   {
+    id: 2,
+    src: '/Kamila/WhatsApp Image 2026-08-13 at 23.41.42.jpeg',
+    caption: 'Momen berharga yang penuh dengan kehangatan 🤍',
+    tag: 'Beautiful Smile',
+  },
+  {
     id: 3,
-    src: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=900&auto=format&fit=crop',
-    caption: 'Menampingimu di setiap langkah hingga titik ini adalah anugerah 🌿',
-    tag: 'Together Forever',
+    src: '/Kamila/WhatsApp Image 2026-08-13 at 23.41.42 (1).jpeg',
+    caption: 'Setiap sudut senyumanmu selalu menenangkan 🌿',
+    tag: 'Precious Day',
   },
   {
     id: 4,
-    src: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?q=80&w=900&auto=format&fit=crop',
-    caption: 'Awal dari masa depan yang cerah dan penuh kebahagiaan ✨',
+    src: '/Kamila/WhatsApp Image 2026-08-13 at 23.41.42 (2).jpeg',
+    caption: 'Kecantikan yang bersinar di setiap langkah ✨',
+    tag: 'Bright Day',
+  },
+  {
+    id: 5,
+    src: '/Kamila/WhatsApp Image 2026-08-13 at 23.41.43.jpeg',
+    caption: 'Selalu ada kebahagiaan saat melihat tawamu 🌸',
+    tag: 'Lovely Memory',
+  },
+  {
+    id: 6,
+    src: '/Kamila/WhatsApp Image 2026-08-13 at 23.41.43 (1).jpeg',
+    caption: 'Semoga hari-harimu selalu dipenuhi keindahan 🎓🌿',
+    tag: 'Sweet Moments',
+  },
+  {
+    id: 7,
+    src: '/Kamila/WhatsApp Image 2026-08-13 at 23.42.10.jpeg',
+    caption: 'Hari istimewa Siti Kamilah, S.Psi.! 🎓🤍',
+    tag: 'Graduation Day',
+  },
+  {
+    id: 8,
+    src: '/Kamila/WhatsApp Image 2026-08-13 at 23.42.11.jpeg',
+    caption: 'Langkah awal menuju masa depan yang cerah dan indah ✨',
     tag: 'Future Ahead',
   },
 ];
