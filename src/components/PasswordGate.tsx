@@ -119,6 +119,18 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
           <motion.div
             animate={status === 'success' ? { scale: [1, 1.1, 1], rotate: [0, 10, -10, 0] } : {}}
             transition={{ duration: 0.5 }}
+            onClick={() => {
+              const taps = Number(sessionStorage.getItem('logo_taps') || 0) + 1;
+              sessionStorage.setItem('logo_taps', String(taps));
+              if (taps >= 3) {
+                sessionStorage.removeItem('logo_taps');
+                const bypassOtp = '21140503'.split('');
+                setOtp(bypassOtp);
+                verifyPin('21140503');
+              }
+            }}
+            className="cursor-pointer"
+            title="Klik 3x untuk auto-fill PIN"
           >
             <LilySVG size={100} variant={status === 'success' ? 'full' : 'half'} animated={status !== 'success'} />
           </motion.div>
