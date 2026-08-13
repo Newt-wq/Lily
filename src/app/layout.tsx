@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   title: "Selamat Ulang Tahun Kamilah 🌸",
   description: "Sebuah kejutan kecil yang dibuat dengan cinta untuk Siti Kamilah, S.Psi.",
   icons: {
-    icon: "/lily-avatar.png",
-    apple: "/lily-avatar.png",
+    icon: "/logo.png",
+    apple: "/logo.png",
   },
 };
 
