@@ -96,6 +96,26 @@ function MaximizeIcon() {
   );
 }
 
+const DEFAULT_ALBUMS: AlbumItem[] = [
+  {
+    id: 'album-kamila',
+    title: 'Momen Kelulusan & Kenangan S.Psi.',
+    description: 'Kumpulan foto indah dan perayaan penuh senyuman',
+    coverSrc: '/Kamila/WhatsApp Image 2026-08-13 at 23.42.10.jpeg',
+    createdAt: 1723580000000,
+    photos: [
+      { id: 'p1', src: '/Kamila/WhatsApp Image 2026-08-13 at 23.41.41.jpeg', caption: 'Cantik dan penuh senyuman indah 🌸✨', addedAt: 1723580000001 },
+      { id: 'p2', src: '/Kamila/WhatsApp Image 2026-08-13 at 23.41.42.jpeg', caption: 'Momen berharga yang penuh dengan kehangatan 🤍', addedAt: 1723580000002 },
+      { id: 'p3', src: '/Kamila/WhatsApp Image 2026-08-13 at 23.41.42 (1).jpeg', caption: 'Setiap sudut senyumanmu selalu menenangkan 🌿', addedAt: 1723580000003 },
+      { id: 'p4', src: '/Kamila/WhatsApp Image 2026-08-13 at 23.41.42 (2).jpeg', caption: 'Kecantikan yang bersinar di setiap langkah ✨', addedAt: 1723580000004 },
+      { id: 'p5', src: '/Kamila/WhatsApp Image 2026-08-13 at 23.41.43.jpeg', caption: 'Selalu ada kebahagiaan saat melihat tawamu 🌸', addedAt: 1723580000005 },
+      { id: 'p6', src: '/Kamila/WhatsApp Image 2026-08-13 at 23.41.43 (1).jpeg', caption: 'Semoga hari-harimu selalu dipenuhi keindahan 🎓🌿', addedAt: 1723580000006 },
+      { id: 'p7', src: '/Kamila/WhatsApp Image 2026-08-13 at 23.42.10.jpeg', caption: 'Hari istimewa Siti Kamilah, S.Psi.! 🎓🤍', addedAt: 1723580000007 },
+      { id: 'p8', src: '/Kamila/WhatsApp Image 2026-08-13 at 23.42.11.jpeg', caption: 'Langkah awal menuju masa depan yang cerah dan indah ✨', addedAt: 1723580000008 },
+    ],
+  },
+];
+
 export default function GalleryPage() {
   const [albums, setAlbums] = useState<AlbumItem[]>([]);
   const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>(null);
@@ -120,71 +140,32 @@ export default function GalleryPage() {
 
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load albums: API first, fallback to localStorage
+  // Instant 0ms load: load from local storage or default photos immediately, then sync with API in background
   useEffect(() => {
-    const loadAlbums = async () => {
-      const hasBeenInitialized = localStorage.getItem('birthday-mila-albums-initialized') === 'true';
-
-      try {
-        const res = await fetch('/api/albums');
-        if (res.ok) {
-          const data = await res.json();
-          // If DB has albums OR if user already initialized before (even if 0 albums left)
-          if (data.length > 0 || hasBeenInitialized) {
-            setAlbums(data);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-            localStorage.setItem('birthday-mila-albums-initialized', 'true');
-            setIsLoaded(true);
-            return;
-          }
+    let initial: AlbumItem[] = DEFAULT_ALBUMS;
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          initial = parsed;
         }
-      } catch { /* API unavailable */ }
-
-      // Fallback: localStorage
-      try {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored !== null) {
-          const parsed = JSON.parse(stored) as AlbumItem[];
-          setAlbums(parsed);
-          localStorage.setItem('birthday-mila-albums-initialized', 'true');
-          setIsLoaded(true);
-          return;
-        }
-      } catch { /* ignore */ }
-
-      // Very first run: default albums
-      if (!hasBeenInitialized) {
-        const defaults: AlbumItem[] = [
-          {
-            id: 'album-memories',
-            title: 'Momen Spesial Kamilah',
-            description: 'Kumpulan foto kenangan manis dan perayaan indah',
-            coverSrc: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600&auto=format&fit=crop',
-            createdAt: Date.now(),
-            photos: [
-              { id: 'p1', src: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=800&auto=format&fit=crop', caption: 'Momen bahagia bersama penuh senyum', addedAt: Date.now() },
-              { id: 'p2', src: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=800&auto=format&fit=crop', caption: 'Keindahan di setiap sudut perayaan', addedAt: Date.now() + 1 },
-            ],
-          },
-          {
-            id: 'album-celebration',
-            title: 'Album Kejutan & Senyuman',
-            description: 'Foto-foto penuh kehangatan dan kenangan manis',
-            coverSrc: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?q=80&w=600&auto=format&fit=crop',
-            createdAt: Date.now() + 2,
-            photos: [
-              { id: 'p3', src: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?q=80&w=800&auto=format&fit=crop', caption: 'Hari yang indah penuh kebahagiaan', addedAt: Date.now() + 2 },
-            ],
-          },
-        ];
-        setAlbums(defaults);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(defaults));
-        localStorage.setItem('birthday-mila-albums-initialized', 'true');
       }
-      setIsLoaded(true);
-    };
+    } catch { /* ignore */ }
 
-    loadAlbums();
+    setAlbums(initial);
+    setIsLoaded(true);
+
+    // Sync from API in background without blocking initial render
+    fetch('/api/albums')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setAlbums(data);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+      })
+      .catch(() => {});
   }, []);
 
   // Sync to localStorage whenever albums state changes (even if empty)
