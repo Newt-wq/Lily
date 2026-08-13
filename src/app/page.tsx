@@ -18,21 +18,7 @@ export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search);
-      const bypass = urlParams.get('bypass');
-      const skip = urlParams.get('skip');
-      const pinParam = urlParams.get('pin') || urlParams.get('pass');
-
-      if (bypass === 'full' || pinParam === '140803' || bypass === 'direct') {
-        // Skip straight to choice / app content
-        setState('choice');
-      } else if (bypass === 'true' || skip === 'true') {
-        // Skip countdown, go to PIN gate
-        setState('password');
-      }
-      setIsLoaded(true);
-    }
+    setIsLoaded(true);
   }, []);
 
   const handleChoiceSelected = (tab: TabType) => {
