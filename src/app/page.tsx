@@ -13,7 +13,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 type AppState = 'countdown' | 'password' | 'transition' | 'choice' | 'surprise_app' | 'companion_app';
 
 export default function Home() {
-  const [state, setState] = useState<AppState>('password');
+  const [state, setState] = useState<AppState>('choice');
   const [initialCompanionTab, setInitialCompanionTab] = useState<CompanionTab>('ai');
   const [isLoaded, setIsLoaded] = useState(false);
 
