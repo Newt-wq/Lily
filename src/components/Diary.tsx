@@ -115,11 +115,21 @@ export default function Diary() {
     updateEntry(id, updates);
   };
 
-  if (!isLoaded) {
+  if (!isLoaded && entries.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[350px]">
-        <div className="w-6 h-6 border-2 border-rose-400 border-t-transparent rounded-full animate-spin" />
-        <p className="text-xs text-gray-400 mt-3 font-light">Membuka catatan harian...</p>
+      <div className="w-full min-h-[55vh] flex flex-col items-center justify-center py-16 px-4">
+        <div className="relative flex items-center justify-center mb-3.5">
+          <div className="w-10 h-10 rounded-full border-2 border-rose-200 border-t-rose-500 animate-spin" />
+          <div className="absolute inset-0 flex items-center justify-center text-rose-400 text-xs">
+            📖
+          </div>
+        </div>
+        <p className="text-sm text-gray-700 font-serif font-medium tracking-wide">
+          Membuka Catatan Harian...
+        </p>
+        <p className="text-[11px] text-gray-400 font-light mt-1">
+          Menyiapkan kenangan indah untukmu ✨
+        </p>
       </div>
     );
   }

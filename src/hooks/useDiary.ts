@@ -12,19 +12,30 @@ export interface DiaryEntry {
 
 const LOCAL_CACHE_KEY = 'kamilah-diary-entries';
 
+const sortEntries = (list: DiaryEntry[]) =>
+  [...list].sort((a, b) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    if (dateA !== dateB) return dateB - dateA;
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+
 export function useDiary() {
-  const [entries, setEntries] = useState<DiaryEntry[]>([]);
+  const [entries, setEntries] = useState<DiaryEntry[]>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem(LOCAL_CACHE_KEY);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) return sortEntries(parsed);
+        }
+      } catch { /* ignore */ }
+    }
+    return [];
+  });
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const sortEntries = (list: DiaryEntry[]) =>
-    [...list].sort((a, b) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      if (dateA !== dateB) return dateB - dateA;
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-    });
-
-  // Load entries: try API first, fallback/sync with localStorage
+  // Background sync with API
   const loadEntries = useCallback(async () => {
     let localData: DiaryEntry[] = [];
     if (typeof window !== 'undefined') {
