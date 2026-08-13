@@ -11,7 +11,7 @@ interface PasswordGateProps {
 }
 
 export default function PasswordGate({ onSuccess }: PasswordGateProps) {
-  const [otp, setOtp] = useState<string[]>(new Array(8).fill(''));
+  const [otp, setOtp] = useState<string[]>(new Array(6).fill(''));
   const [status, setStatus] = useState<'idle' | 'error' | 'success'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -33,7 +33,7 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
     setOtp(newOtp);
 
     // Auto-focus next input
-    if (value && index < 7 && inputRefs.current[index + 1]) {
+    if (value && index < 5 && inputRefs.current[index + 1]) {
       inputRefs.current[index + 1]?.focus();
     }
 
@@ -63,8 +63,8 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const pastedData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 8);
-    if (pastedData.length === 8) {
+    const pastedData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+    if (pastedData.length === 6) {
       const newOtp = pastedData.split('');
       setOtp(newOtp);
       // Trigger verification
@@ -124,9 +124,9 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
               sessionStorage.setItem('logo_taps', String(taps));
               if (taps >= 3) {
                 sessionStorage.removeItem('logo_taps');
-                const bypassOtp = '21140503'.split('');
+                const bypassOtp = '140803'.split('');
                 setOtp(bypassOtp);
-                verifyPin('21140503');
+                verifyPin('140803');
               }
             }}
             className="cursor-pointer"
@@ -141,7 +141,7 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
           Pintu Kejutan 🌸
         </h3>
         <p className="text-xs text-gray-500 font-light mb-8 max-w-[280px] mx-auto leading-relaxed">
-          Masukkan 8 digit kode rahasia untuk membuka seluruh kejutan di dalam
+          Masukkan 6 digit kode rahasia untuk membuka seluruh kejutan di dalam
         </p>
 
         {/* OTP Input Boxes */}
@@ -163,7 +163,7 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
               onKeyDown={e => handleKeyDown(e, index)}
               onPaste={handlePaste}
               disabled={status === 'success'}
-              className={`w-8 h-11 sm:w-10 sm:h-13 md:w-11 md:h-14 text-center text-base sm:text-lg font-bold rounded-xl sm:rounded-2xl border transition-all duration-300 focus:outline-none focus:ring-2 select-all ${
+              className={`w-9 h-12 sm:w-11 sm:h-14 md:w-12 md:h-16 text-center text-lg sm:text-xl font-bold rounded-xl sm:rounded-2xl border transition-all duration-300 focus:outline-none focus:ring-2 select-all ${
                 status === 'success'
                   ? 'bg-emerald-50/80 border-emerald-300 text-emerald-600 focus:ring-emerald-200'
                   : status === 'error'

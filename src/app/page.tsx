@@ -13,7 +13,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 type AppState = 'countdown' | 'password' | 'transition' | 'choice' | 'surprise_app' | 'companion_app';
 
 export default function Home() {
-  const [state, setState] = useState<AppState>('choice');
+  const [state, setState] = useState<AppState>('countdown');
   const [initialCompanionTab, setInitialCompanionTab] = useState<CompanionTab>('ai');
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -24,7 +24,7 @@ export default function Home() {
       const skip = urlParams.get('skip');
       const pinParam = urlParams.get('pin') || urlParams.get('pass');
 
-      if (bypass === 'full' || pinParam === '21140503' || bypass === 'direct') {
+      if (bypass === 'full' || pinParam === '140803' || bypass === 'direct') {
         // Skip straight to choice / app content
         setState('choice');
       } else if (bypass === 'true' || skip === 'true') {
