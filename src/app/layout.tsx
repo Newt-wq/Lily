@@ -21,7 +21,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Selamat Ulang Tahun Kamilah 🌸",
+  title: "Lilyou 🌸",
   description: "Sebuah kejutan kecil yang dibuat dengan cinta untuk Siti Kamilah, S.Psi.",
   icons: {
     icon: "/logo.png",
