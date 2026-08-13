@@ -252,26 +252,36 @@ export default function Diary() {
         )}
       </AnimatePresence>
 
-      {/* ── VIEW FULL ENTRY MODAL (Journal Reader) ── */}
+      {/* ── VIEW FULL ENTRY MODAL (Buku Bacaan / Book Reader) ── */}
       <AnimatePresence>
         {viewingEntry && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 backdrop-blur-xs p-4 overflow-y-auto">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-3 sm:p-6 overflow-y-auto">
             <div className="absolute inset-0" onClick={() => setViewingEntry(null)} />
 
+            {/* Book Outer Wrapper */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              initial={{ opacity: 0, scale: 0.93, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="relative z-10 w-full max-w-xl bg-[#FAF8F5] border border-stone-200/90 p-6 sm:p-9 rounded-[28px] shadow-[0_20px_50px_rgba(0,0,0,0.14)] max-h-[88vh] flex flex-col overflow-hidden"
+              exit={{ opacity: 0, scale: 0.93, y: 20 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="relative z-10 w-full max-w-2xl bg-[#FDFBF7] border-2 border-[#EADFCB] rounded-[24px] md:rounded-[32px] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3),inset_16px_0_24px_-12px_rgba(120,90,40,0.12)] max-h-[90vh] flex flex-col overflow-hidden"
             >
-              {/* Paper Decorative Line Accent */}
-              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-rose-400 via-amber-300 to-rose-300" />
+              {/* Decorative Book Ribbon / Bookmark Accent */}
+              <div className="absolute top-0 right-12 w-6 h-14 bg-rose-400/90 rounded-b-md shadow-md z-20 pointer-events-none flex items-end justify-center pb-2">
+                <div className="w-2 h-2 bg-rose-600/60 rounded-full" />
+              </div>
 
-              {/* Modal Top Metadata Bar */}
-              <div className="flex justify-between items-center mb-4">
-                <div className="flex flex-wrap items-center gap-2 text-xs text-stone-500 font-medium">
-                  <span className="flex items-center gap-1.5">
+              {/* Book Spine Edge Bar (Left Border Accent) */}
+              <div className="absolute top-0 bottom-0 left-0 w-3 md:w-4 bg-gradient-to-r from-[#D8C7AA] via-[#EAE1D0] to-transparent z-20 pointer-events-none" />
+
+              {/* Book Header Bar */}
+              <div className="relative z-10 pt-6 px-6 md:pt-8 md:px-10 flex items-center justify-between border-b border-[#E8DFD1]/80 pb-4">
+                <div className="flex items-center gap-2 text-xs text-amber-900/70 font-serif">
+                  <span className="font-semibold tracking-widest uppercase text-[10px] text-rose-500 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200/70">
+                    📖 Jurnal Harian
+                  </span>
+                  <span>•</span>
+                  <span className="flex items-center gap-1 font-medium">
                     <CalendarIcon />
                     {(() => {
                       try {
@@ -286,72 +296,69 @@ export default function Diary() {
                       }
                     })()}
                   </span>
-
                   {viewingEntry.mood && (
                     <>
-                      <span className="text-stone-300">•</span>
-                      <span className="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-rose-100/70 text-rose-600 border border-rose-200/60">
-                        {viewingEntry.mood}
-                      </span>
+                      <span>•</span>
+                      <span className="italic text-stone-600">Mood: {viewingEntry.mood}</span>
                     </>
                   )}
-
-                  <span className="text-stone-300">•</span>
-                  <span className="text-[11px] text-stone-400">
-                    {Math.max(1, Math.ceil(viewingEntry.content.split(/\s+/).length / 200))} mnt baca
-                  </span>
                 </div>
 
                 <button
                   onClick={() => setViewingEntry(null)}
-                  className="w-8 h-8 rounded-full bg-white/80 hover:bg-white text-stone-400 hover:text-stone-700 border border-stone-200/60 shadow-2xs transition-colors flex items-center justify-center flex-shrink-0"
-                  title="Tutup"
+                  className="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-800 transition-colors flex items-center justify-center shadow-xs flex-shrink-0 z-30"
+                  title="Tutup Buku"
                 >
                   <CloseIcon />
                 </button>
               </div>
 
-              {/* Entry Title */}
-              <h3 className="text-2xl sm:text-3xl text-stone-900 font-semibold tracking-tight leading-snug mb-5 pb-4 border-b border-stone-200/70" style={{ fontFamily: 'Georgia, serif' }}>
-                {viewingEntry.title}
-              </h3>
+              {/* Book Page Reading Area */}
+              <div className="flex-1 overflow-y-auto overflow-x-hidden px-6 md:px-12 py-6 md:py-8 max-w-full">
+                {/* Book Title */}
+                <h3 className="text-2xl md:text-3xl text-stone-900 font-bold tracking-normal leading-snug mb-6 pb-4 border-b border-dashed border-[#E3D7C3] break-words" style={{ fontFamily: 'Georgia, serif' }}>
+                  {viewingEntry.title}
+                </h3>
 
-              {/* Modal Scrollable Reader Content */}
-              <div className="flex-1 overflow-y-auto pr-2 text-base text-stone-800 leading-[1.85] font-normal whitespace-pre-wrap" style={{ fontFamily: 'Georgia, serif' }}>
-                {viewingEntry.content}
+                {/* Book Page Body Text */}
+                <div className="text-base md:text-lg text-stone-800 leading-[2.1] font-serif whitespace-pre-wrap break-words overflow-hidden text-justify tracking-normal">
+                  {viewingEntry.content}
+                </div>
               </div>
 
-              {/* Modal Action Toolbar */}
-              <div className="mt-6 pt-4 border-t border-stone-200/70 flex items-center justify-between">
-                <button
-                  onClick={() => {
-                    const target = viewingEntry;
-                    setViewingEntry(null);
-                    deleteEntry(target.id);
-                  }}
-                  className="px-3 py-1.5 rounded-xl text-xs font-medium text-rose-600 hover:bg-rose-50 transition-colors flex items-center gap-1.5"
-                >
-                  <TrashIcon />
-                  <span>Hapus</span>
-                </button>
+              {/* Book Footer Bar */}
+              <div className="relative z-10 px-6 py-4 md:px-10 bg-[#F7F2E8] border-t border-[#E8DFD1]/80 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => {
+                      const target = viewingEntry;
+                      setViewingEntry(null);
+                      deleteEntry(target.id);
+                    }}
+                    className="px-3 py-1.5 rounded-xl text-xs font-medium text-rose-600 hover:bg-rose-100/60 transition-colors flex items-center gap-1.5"
+                  >
+                    <TrashIcon />
+                    <span>Hapus Catatan</span>
+                  </button>
+                </div>
 
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setViewingEntry(null)}
-                    className="px-4 py-2 rounded-xl text-xs font-medium text-stone-600 bg-white border border-stone-200/80 hover:bg-stone-50 transition-colors shadow-2xs"
-                  >
-                    Tutup
-                  </button>
                   <button
                     onClick={() => {
                       const target = viewingEntry;
                       setViewingEntry(null);
                       handleEdit(target);
                     }}
-                    className="px-4.5 py-2 rounded-xl text-xs font-medium text-white bg-rose-500 hover:bg-rose-600 transition-colors shadow-2xs flex items-center gap-1.5"
+                    className="px-4 py-2 rounded-xl text-xs font-medium text-amber-900 bg-amber-100/80 hover:bg-amber-200/80 transition-colors shadow-2xs flex items-center gap-1.5 border border-amber-200/70"
                   >
                     <EditIcon />
                     <span>Sunting</span>
+                  </button>
+                  <button
+                    onClick={() => setViewingEntry(null)}
+                    className="px-5 py-2 rounded-xl text-xs font-medium text-white bg-rose-500 hover:bg-rose-600 transition-colors shadow-2xs"
+                  >
+                    Tutup Buku
                   </button>
                 </div>
               </div>
