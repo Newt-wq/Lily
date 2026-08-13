@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --color-lily-cream: #FCF9F2;
+  --color-lily-pink: #FCE1E4;
+  --color-lily-lavender: #EAE6F8;
+  --color-lily-sage: #E2ECE9;
+  --color-lily-gold: #EAC435;
+  --color-lily-pink-dark: #E5989B;
+  
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  --animate-sway: gentle-sway 6s ease-in-out infinite;
+  --animate-shake: shake 0.5s ease-in-out;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes gentle-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
+  20%, 40%, 60%, 80% { transform: translateX(6px); }
+}
+
+@keyframes petal-fall {
+  0% {
+    transform: translateY(-20px) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--petal-opacity, 0.6);
+  }
+  90% {
+    opacity: var(--petal-opacity, 0.6);
+  }
+  100% {
+    transform: translateY(105vh) translateX(100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.petal-particle {
+  animation-name: petal-fall;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+/* Custom Utilities & Styles */
+body {
+  background-color: #FCF9F2; /* lily-cream */
+  color: #2F3E46;
+  overflow-x: hidden;
+  font-family: var(--font-sans);
+}
+
+/* Paper texture for diary and letter */
+.paper-texture {
+  background-color: #FCF9F2;
+  background-image: 
+    radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 0),
+    radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 0);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FCF9F2;
+}
+::-webkit-scrollbar-thumb {
+  background: #E5989B;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B5838D;
+}
