@@ -115,6 +115,17 @@ export default function CountdownPage({ onComplete }: CountdownPageProps) {
             </span>
           </div>
         </div>
+
+        {/* Visible Bypass Button */}
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onComplete}
+          className="mt-8 px-6 py-2.5 rounded-full bg-rose-400 hover:bg-rose-500 text-white font-medium text-xs md:text-sm shadow-lg shadow-rose-200/50 transition-all duration-200 flex items-center justify-center gap-2 mx-auto"
+        >
+          <span>Punya Kode Rahasia? Masuk Disini</span>
+          <span>🔑</span>
+        </motion.button>
       </motion.div>
 
       {/* Hidden skip trigger for testing on prod or dev skip button */}
