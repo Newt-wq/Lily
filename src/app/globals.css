@@ -82,3 +82,18 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #B5838D;
 }
+
+/* Prevent iOS / Mobile Safari automatic zooming on input focus */
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  input[type="number"],
+  input[type="password"],
+  input[type="email"],
+  input[type="search"],
+  input[type="date"],
+  textarea,
+  select {
+    font-size: 16px !important;
+    touch-action: manipulation;
+  }
+}

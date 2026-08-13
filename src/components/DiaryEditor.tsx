@@ -134,7 +134,7 @@ export default function DiaryEditor({ entry, onSave, onUpdate, onClose }: DiaryE
                 placeholder="Judul (opsional)"
                 value={title}
                 onChange={e => setTitle(e.target.value)}
-                className="w-full px-3.5 py-2 text-xs rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-rose-300 text-gray-800 placeholder:text-gray-400 transition-all"
+                className="w-full px-3.5 py-2 text-[16px] sm:text-xs rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-rose-300 text-gray-800 placeholder:text-gray-400 transition-all"
               />
             </div>
 
@@ -147,7 +147,7 @@ export default function DiaryEditor({ entry, onSave, onUpdate, onClose }: DiaryE
                 type="date"
                 value={date}
                 onChange={e => setDate(e.target.value)}
-                className="w-full px-3.5 py-2 text-xs rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-rose-300 text-gray-800 transition-all"
+                className="w-full px-3.5 py-2 text-[16px] sm:text-xs rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-rose-300 text-gray-800 transition-all"
               />
             </div>
           </div>
@@ -189,7 +189,7 @@ export default function DiaryEditor({ entry, onSave, onUpdate, onClose }: DiaryE
               placeholder="Tuliskan pikiran, perasaan, atau cerita harimu di sini..."
               value={content}
               onChange={e => setContent(e.target.value)}
-              className="w-full px-4 py-3 text-xs rounded-2xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-rose-300 text-gray-800 placeholder:text-gray-400 font-sans leading-relaxed transition-all"
+              className="w-full px-4 py-3 text-[16px] sm:text-xs rounded-2xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-rose-300 text-gray-800 placeholder:text-gray-400 font-sans leading-relaxed transition-all"
             />
           </div>
 

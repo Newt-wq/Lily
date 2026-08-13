@@ -326,7 +326,7 @@ export default function VirtualFriendPage() {
               value={inputVal}
               onChange={e => setInputVal(e.target.value)}
               placeholder="Tulis pesan..."
-              className="flex-1 px-4 py-2.5 text-[14px] rounded-full border border-gray-200 bg-gray-50 focus:outline-none focus:border-rose-300 focus:bg-white text-gray-700 placeholder:text-gray-400 transition-all"
+              className="flex-1 px-4 py-2.5 text-[16px] sm:text-[14px] rounded-full border border-gray-200 bg-gray-50 focus:outline-none focus:border-rose-300 focus:bg-white text-gray-700 placeholder:text-gray-400 transition-all"
               style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}
             />
             <button
