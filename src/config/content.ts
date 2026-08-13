@@ -12,7 +12,7 @@ Di hari spesialmu ini, aku berdoa agar semua langkahmu ke depan selalu diliputi 
 Terima kasih sudah menjadi bagian terindah dalam hidupku. Selamat merayakan hari kelahiranmu sekaligus pencapaian besarmu!
 
 Dengan seluruh cintaku,
-[Nama Kamu] 🌸`;
+Ariel Dien 🌸`;
 
 export const flowerMessages = [
   "Kamu tahu nggak? Senyummu itu selalu bisa jadi obat paling ampuh buat hari-hariku yang lelah. Tetap tersenyum ya sayang! 😊",

@@ -6,16 +6,21 @@ import { motion } from 'framer-motion';
 
 export default function LoveLetter() {
   const [displayedText, setDisplayedText] = useState('');
-  const [isTyping, setIsTyping] = useState(true);
+  const [isTyping, setIsTyping] = useState(false);
   const [showEnvelope, setShowEnvelope] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const startTyping = useCallback(() => {
     setShowEnvelope(false);
+    setIsTyping(true);
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
 
     let currentIndex = 0;
     let accumulatedText = '';
-    let timeoutId: NodeJS.Timeout;
 
     const typeNextChar = () => {
       if (currentIndex >= letterContent.length) {
@@ -28,25 +33,36 @@ export default function LoveLetter() {
       setDisplayedText(accumulatedText);
       currentIndex++;
 
-      // Natural pause modeling
-      let delay = 30;
+      let delay = 15;
       if (char === '.' || char === '!' || char === '?') {
-        delay = 400;
+        delay = 180;
       } else if (char === ',' || char === '-') {
-        delay = 200;
+        delay = 90;
       } else if (char === '\n') {
-        delay = 300;
-      } else if (char === ' ') {
-        delay = 50;
+        delay = 120;
       }
 
-      timeoutId = setTimeout(typeNextChar, delay);
+      timeoutRef.current = setTimeout(typeNextChar, delay);
     };
 
-    // Small delay before starting to type
-    timeoutId = setTimeout(typeNextChar, 800);
+    timeoutRef.current = setTimeout(typeNextChar, 200);
+  }, []);
 
-    return () => clearTimeout(timeoutId);
+  const handleSkip = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setIsTyping(false);
+    setDisplayedText(letterContent);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, []);
 
   // Auto-scroll as text grows
@@ -55,11 +71,6 @@ export default function LoveLetter() {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
   }, [displayedText, isTyping]);
-
-  const handleSkip = () => {
-    setIsTyping(false);
-    setDisplayedText(letterContent);
-  };
 
   return (
     <div className="w-full max-w-xl mx-auto flex flex-col items-center">
