@@ -1,14 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '../../../lib/mongodb';
-import LetterStatus from '../../../models/LetterStatus';
+import { supabase } from '../../../lib/supabase';
 
 export async function GET() {
   try {
-    await dbConnect();
-    const statuses = await LetterStatus.find({}).lean();
+    const { data: statuses, error } = await supabase
+      .from('letter_statuses')
+      .select('*');
+
+    if (error) throw error;
+
     const map: Record<string, boolean> = {};
-    statuses.forEach((s: any) => {
-      map[s.letterId] = s.opened;
+    (statuses || []).forEach((s: any) => {
+      map[s.letter_id] = s.opened;
     });
     return NextResponse.json(map);
   } catch (error: any) {
@@ -18,13 +21,19 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    await dbConnect();
     const body = await request.json();
-    await LetterStatus.findOneAndUpdate(
-      { letterId: body.letterId },
-      { opened: true, openedAt: new Date().toISOString() },
-      { upsert: true, new: true }
-    );
+    const { error } = await supabase
+      .from('letter_statuses')
+      .upsert(
+        {
+          letter_id: body.letterId,
+          opened: true,
+          opened_at: new Date().toISOString(),
+        },
+        { onConflict: 'letter_id' }
+      );
+
+    if (error) throw error;
     return NextResponse.json({ success: true });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

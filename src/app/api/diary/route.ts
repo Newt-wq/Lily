@@ -1,19 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '../../../lib/mongodb';
-import DiaryEntry from '../../../models/DiaryEntry';
+import { supabase } from '../../../lib/supabase';
 
 export async function GET() {
   try {
-    await dbConnect();
-    const entries = await DiaryEntry.find({}).sort({ date: -1, createdAt: -1 }).lean();
-    const formatted = entries.map((e: any) => ({
-      id: e._id.toString(),
+    const { data: entries, error } = await supabase
+      .from('diary_entries')
+      .select('*')
+      .order('date', { ascending: false })
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    const formatted = (entries || []).map((e: any) => ({
+      id: e.id,
       title: e.title,
       content: e.content,
       mood: e.mood || undefined,
       date: e.date,
-      createdAt: e.createdAt,
-      updatedAt: e.updatedAt,
+      createdAt: e.created_at,
+      updatedAt: e.updated_at,
     }));
     return NextResponse.json(formatted);
   } catch (error: any) {
@@ -23,24 +28,28 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    await dbConnect();
     const body = await request.json();
-    const entry = await DiaryEntry.create({
-      title: body.title || `Catatan ${body.date || new Date().toISOString().split('T')[0]}`,
-      content: body.content,
-      mood: body.mood,
-      date: body.date || new Date().toISOString().split('T')[0],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    });
+    const { data: entry, error } = await supabase
+      .from('diary_entries')
+      .insert({
+        title: body.title || `Catatan ${body.date || new Date().toISOString().split('T')[0]}`,
+        content: body.content,
+        mood: body.mood,
+        date: body.date || new Date().toISOString().split('T')[0],
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+
     return NextResponse.json({
-      id: entry._id.toString(),
+      id: entry.id,
       title: entry.title,
       content: entry.content,
       mood: entry.mood,
       date: entry.date,
-      createdAt: entry.createdAt,
-      updatedAt: entry.updatedAt,
+      createdAt: entry.created_at,
+      updatedAt: entry.updated_at,
     }, { status: 201 });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
