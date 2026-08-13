@@ -37,12 +37,16 @@ export function useDiary() {
     }
 
     try {
-      const res = await fetch('/api/diary');
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2500);
+      const res = await fetch('/api/diary', { signal: controller.signal });
+      clearTimeout(timeoutId);
+
       if (res.ok) {
         const dbData = await res.json();
         
         // If DB has data, use it & update local cache
-        if (dbData.length > 0) {
+        if (Array.isArray(dbData) && dbData.length > 0) {
           const sorted = sortEntries(dbData);
           setEntries(sorted);
           if (typeof window !== 'undefined') {
@@ -59,20 +63,22 @@ export function useDiary() {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ title: item.title, content: item.content, mood: item.mood, date: item.date }),
-            });
+            }).catch(() => {});
           }
           // Fetch updated DB list
-          const freshRes = await fetch('/api/diary');
-          if (freshRes.ok) {
+          const freshRes = await fetch('/api/diary').catch(() => null);
+          if (freshRes && freshRes.ok) {
             const freshData = await freshRes.json();
-            setEntries(sortEntries(freshData));
-            setIsLoaded(true);
-            return;
+            if (Array.isArray(freshData)) {
+              setEntries(sortEntries(freshData));
+              setIsLoaded(true);
+              return;
+            }
           }
         }
       }
     } catch {
-      // API unavailable, use localStorage fallback
+      // API unavailable or timed out, use localStorage fallback
     }
 
     setEntries(sortEntries(localData));
