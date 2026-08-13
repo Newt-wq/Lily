@@ -402,7 +402,7 @@ export default function GalleryPage() {
                   className="group relative bg-white rounded-2xl overflow-hidden border border-gray-200/80 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] hover:border-rose-300 transition-all duration-300 cursor-pointer flex flex-col justify-between"
                 >
                   {/* Album Cover Container */}
-                  <div className="relative w-full aspect-[4/3] overflow-hidden bg-gray-100">
+                  <div className="relative w-full aspect-[3/4] overflow-hidden bg-gray-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={album.coverSrc}
@@ -528,7 +528,7 @@ export default function GalleryPage() {
                   {/* Photo Thumbnail */}
                   <div
                     onClick={() => setLightboxPhoto(photo)}
-                    className="relative w-full aspect-[4/3] overflow-hidden bg-gray-100 cursor-pointer"
+                    className="relative w-full aspect-[3/4] overflow-hidden bg-gray-100 cursor-pointer"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img

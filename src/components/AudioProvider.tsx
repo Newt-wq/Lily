@@ -18,10 +18,19 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    // Initialize audio element
-    const audio = new Audio('/audio/serta-mulia.mp3');
+    // Cloud audio source or local file fallback
+    const audioUrl = process.env.NEXT_PUBLIC_AUDIO_URL || '/audio/serta-mulia.mp3';
+    const audio = new Audio(audioUrl);
     audio.loop = true;
     audioRef.current = audio;
+
+    // Fallback if primary source fails
+    audio.onerror = () => {
+      console.log('Primary audio source failed, using cloud fallback');
+      if (audioRef.current && audioUrl !== '/audio/serta-mulia.mp3') {
+        audioRef.current.src = '/audio/serta-mulia.mp3';
+      }
+    };
 
     // Check if browser allows autoplay on user interaction
     const handleInteraction = () => {

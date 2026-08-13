@@ -99,7 +99,7 @@ export default function PhotoGallery() {
   const current = graduationPhotos[currentIndex];
 
   return (
-    <div className="w-full max-w-xl mx-auto flex flex-col items-center">
+    <div className="w-full max-w-md mx-auto flex flex-col items-center">
       {/* Title without any subtitle description */}
       <div className="text-center mb-3">
         <h3 className="font-serif text-xl md:text-2xl text-gray-800 font-bold">
@@ -112,7 +112,7 @@ export default function PhotoGallery() {
         onClick={goNext}
         onMouseEnter={() => setIsAutoPlaying(false)}
         onMouseLeave={() => setIsAutoPlaying(true)}
-        className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/80 bg-gray-900 group cursor-pointer"
+        className="relative w-full aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/80 bg-gray-900 group cursor-pointer"
       >
         {/* Photo Animation with smooth crossfade */}
         <AnimatePresence mode="wait">
