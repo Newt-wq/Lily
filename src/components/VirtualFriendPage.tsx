@@ -13,7 +13,7 @@ interface Message {
   animate?: boolean;
 }
 
-function TypewriterText({ text, speed = 25 }: { text: string; speed?: number }) {
+function TypewriterText({ text, speed = 8 }: { text: string; speed?: number }) {
   const [displayedText, setDisplayedText] = useState('');
   const [isDone, setIsDone] = useState(false);
 
@@ -124,9 +124,9 @@ export default function VirtualFriendPage() {
     }
 
     const modelsToTry = [
+      'gemini-3.5-flash-lite',
       'gemini-3.5-flash',
       'gemini-3.6-flash',
-      'gemini-3.5-flash-lite',
     ];
 
     let responseText = '';
@@ -138,6 +138,10 @@ export default function VirtualFriendPage() {
         const model = genAI.getGenerativeModel({
           model: modelName,
           systemInstruction: aiConfig.systemPrompt,
+          generationConfig: {
+            maxOutputTokens: 250,
+            temperature: 0.7,
+          },
         });
 
         const promptText = `User: ${userText}`;
@@ -274,7 +278,7 @@ export default function VirtualFriendPage() {
                         }`}
                         style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}
                       >
-                        {m.animate ? <TypewriterText text={m.text} speed={25} /> : m.text}
+                        {m.animate ? <TypewriterText text={m.text} speed={8} /> : m.text}
                       </div>
                       <span className={`text-[10px] text-gray-300 mt-1 block ${isBot ? 'pl-1' : 'pr-1 text-right'}`}>
                         {m.timestamp}
